@@ -1,0 +1,52 @@
+body,
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background: url("header.jpg") no-repeat center center fixed;
+ -webkit-background-size: cover;
+ -moz-background-size: cover;
+ -o-background-size: cover;
+  background-size: cover;
+
+
+}
+h1{
+  font-size: 3rem;
+  color:azure;
+}
+hr {
+  margin: 20px auto;
+  color: #F05F44;
+  border: 2px solid #F05F44;
+  max-width: 65px;
+  opacity: 1;  
+}
+.btn
+{
+  font-weight: 600;
+  text-transform: uppercase;
+}
+ .btn-xl
+ {
+   padding: 1rem 2rem;
+   border-radius: 200px;
+ }
+ .btn-primary
+ {
+   background-color: rgb(202, 85, 17);
+   border-color: rgb(202, 85, 17);
+ }
+ .btn-primary:hover
+ {
+   background-color:rgb(197, 42, 14) ;
+   border-color: rgb(197, 42, 14);
+   border-width: 4px; 
+   /* Increasing border width to display the hover */
+   transition-duration: 10ms;
+ }
+ .buffer
+ {
+   height: 7rem ;
+ }
