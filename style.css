@@ -12,15 +12,23 @@ html {
 
 
 }
+.link
+ {
+   font-size:medium;
+   display: flex;
+   justify-content: flex-end;
+   align-content: flex-end;
+ }
 h1{
   font-size: 3rem;
   color:azure;
+  
 }
 hr {
   margin: 20px auto;
   color: #F05F44;
   border: 2px solid #F05F44;
-  max-width: 65px;
+  max-width: 85px;
   opacity: 1;  
 }
 .btn
@@ -32,6 +40,13 @@ hr {
  {
    padding: 1rem 2rem;
    border-radius: 200px;
+ }
+ .btn-s
+ {
+   border-radius: 150px;
+   margin-top: 10px;
+   margin-right: 10px;
+   padding: 0.5rem 0.5rem;
  }
  .btn-primary
  {
@@ -48,5 +63,7 @@ hr {
  }
  .buffer
  {
-   height: 7rem ;
+   height: 13rem ;
  }
+
+ 
