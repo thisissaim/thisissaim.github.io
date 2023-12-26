@@ -8,7 +8,8 @@ redirect_from:
   - /about.html
 ---
 
-![Illustration](/images/turing.jpg){:  .align-right width =320px"}
+<img src="/images/turing.jpg" alt="Illustration" align="right" width="320px" />
+
 🧑‍💻 I'm a final year undergraduate student of computer engineering at AMU.
 
 🔬 My research interests are natural language processing, multi-modality, and some cool blockchain stuff.
