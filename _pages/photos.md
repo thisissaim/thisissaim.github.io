@@ -1,3 +1,11 @@
+
+---
+layout: archive
+title: "Photos Repository"
+permalink: /photos/
+author_profile: true
+---
+
 # My Photo Repository
 
 ## Random City A
