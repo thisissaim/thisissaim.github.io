@@ -8,7 +8,7 @@ redirect_from:
   - /about.html
 ---
 
-![Illustration](/images/turing.jpg){: .align-right width =320px"}
+![Illustration](/images/turing.jpg){:  .align-right width =320px"}
 🧑‍💻 I'm a final year undergraduate student of computer engineering at AMU.
 
 🔬 My research interests are natural language processing, multi-modality, and some cool blockchain stuff.
@@ -18,9 +18,9 @@ redirect_from:
 🔰 I chair the IEEE Computer Society Chapter of my college
 
 # My College Experience
-I started of my degree in middle of a pandemic, in virtual mode. Atleast one advantage that we all had during online classes was that we got a lot more time on our hands. The everyday routine of getting ready, commuting to the college, pretendig to study in library during gap periods was all gone. 
-I began with taking a course of C and then C++, also did some light DSA just to experience it. Then I hopped onto some Web Developmnet stuff, (HTML/CSS/Javascript) frontend mostly and that was the first time I liked coding. It might be because you could see your code as an actual visual output on your laptop screen. 
-During my sophomore year, my seniors recommended me to learn, code and research on a particular domain, if I wanted to publish papers in conferences or journals. I started learning about Blockchain (might be because the buzzword has a nice ring to it), took a couple of MOOCS, even a credit-based course which had assesments. After some time, my with two of my classmated and great friends, who are obviously better than me but won't shpw it explicitly wrote a paper on e-voting for an IEEE conference. ( I might write another page sometime again on how we wrote it, the process, how it got rejected the first time, in maybe another separate tab).
+I started my degree in the middle of a pandemic, in virtual mode. At least one advantage that we all had during online classes was that we got a lot more time on our hands. The everyday routine of getting ready, commuting to college, and pretending to study in the library during gap periods was all gone. 
+I began by taking a course of C and then C++, also did some light DSA just to experience it. Then I hopped onto some Web Development stuff, (HTML/CSS/Javascript) frontend mostly and that was the first time I liked coding. It might be because you could see your code as an actual visual output on your laptop screen. 
+During my sophomore year, my seniors recommended I learn, code, and research on a particular domain if I wanted to publish papers in conferences or journals. I started learning about Blockchain (might be because the buzzword has a nice ring to it), took a couple of MOOCS, and even a credit-based course for which I had to travel to another city for my final assessment. After some time, I with two of my classmates and great friends, who are obviously better than me but won't show it explicitly wrote a paper on e-voting for an IEEE conference. ( I might write another page sometime again on how we wrote it, the process, how it got rejected the first time, in maybe another separate tab).
 It felt pretty good, I must say, so we decided to write another on BYOD security. 
 This year, I jumped ship from blockchain to ML. You can see I can't stay on one thing too long. *I might have attachment issues*. My learning process has been kinda same, took a couple of courses, and found NLP intriguing, given the hype around all the AI stuff happening since the release of GPT 3.5. I wrote another couple of short conference papers on cyberbullying detection (a review paper, and another a comparative analysis of various models).
 
