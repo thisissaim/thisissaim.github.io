@@ -1,9 +1,12 @@
 
 ---
-layout: archive
-title: "Photos Repository"
-permalink: /photos/
+permalink: /photos
+title: "👋 Hey, This is Saim"
+excerpt: "About me"
 author_profile: true
+redirect_from: 
+  - /photos/
+  - /photos.html
 ---
 
 # My Photo Repository
