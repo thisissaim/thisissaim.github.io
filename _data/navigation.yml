@@ -5,13 +5,11 @@ main:
     
   - title: "Portfolio"
     url: /portfolio/
-        
-  - title: "Activities"
-    url: /activities/
-    
+
   - title: "CV"
     url: /files/Saim_Mohammad_CV.pdf
 
-  - title: "Photos"
-    url: /photos/
+  - title: "Posts"
+    url: /posts/
+    
     
