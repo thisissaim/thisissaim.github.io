@@ -6,5 +6,5 @@ excerpt: 'The concept of BYOD has been around in the corporate world for a while
 date: 2023-11-23
 venue: '2023 14th International Conference on Computing Communication and Networking Technologies (ICCCNT)'
 paperurl: 'https://ieeexplore.ieee.org/document/10307218'
-citation: 'M. Mamoon, M. Saim, I. Shah and A. Samad, "A Decentralized BYOD Authentication System secure against ReEntrancy Attacks," <i>2023 14th International Conference on Computing Communication and Networking Technologies (ICCCNT):/i>, Delhi, India, 2023, pp. 1-7, doi: 10.1109/ICCCNT56998.2023.10307218.'
+citation: 'M. Mamoon, M. Saim, I. Shah and A. Samad, "A Decentralized BYOD Authentication System secure against ReEntrancy Attacks," <i>2023 14th International Conference on Computing Communication and Networking Technologies (ICCCNT):</i>, Delhi, India, 2023, pp. 1-7, doi: 10.1109/ICCCNT56998.2023.10307218.'
 ---
