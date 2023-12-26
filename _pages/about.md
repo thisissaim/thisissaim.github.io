@@ -8,7 +8,7 @@ redirect_from:
   - /about.html
 ---
 
-<img src="/images/turing.jpg" alt="Illustration" align="right" width="320px" />
+<img src="/images/turing.jpg" alt="Illustration" align="right" width="400px" />
 
 🧑‍💻 I'm a final year undergraduate student of computer engineering at AMU.
 
