@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Portfolio - Mohammad Saim</title>
+    <script src="gallery-config.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Loading Screen Styles */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: opacity 1s ease-out;
+        }
+
+        .loading-screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('./landing.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            animation: subtleZoom 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes subtleZoom {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.1);
+            }
+        }
+
+        .quote-container {
+            position: relative;
+            max-width: 800px;
+            padding: 2rem;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .quote-text {
+            font-family: 'Crimson Text', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            font-style: italic;
+            color: #ffffff;
+            line-height: 1.4;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 2s ease-out forwards;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .quote-source {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.2rem;
+            color: #f0f0f0;
+            opacity: 0;
+            animation: fadeInUp 2s ease-out 0.5s forwards;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        }
+
+        .quote-source::before {
+            content: "— ";
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .loading-progress {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #ffffff;
+            width: 0;
+            transition: width 5s ease-out;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Main Content (hidden initially) */
+        .main-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        .main-content.visible {
+            display: block;
+            opacity: 1;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .profile-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #4CAF50;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #4CAF50, #81C784);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #b0b0b0;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Styled links for intro */
+        .dept-link {
+            color: #ffffff;
+            text-decoration: underline;
+            text-decoration-color: #ff4444;
+            text-decoration-thickness: 3px;
+            text-underline-offset: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .dept-link:hover {
+            color: #ff4444;
+        }
+
+        /* Styled links for intro */
+        .advisor-link {
+            color: #ffffff;
+            text-decoration: underline;
+            text-decoration-color: #ff7802;
+            text-decoration-thickness: 3px;
+            text-underline-offset: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .advisor-link:hover {
+            color: #fa7414;
+        }
+
+        .uni-link {
+            color: #ffffff;
+            text-decoration: underline;
+            text-decoration-color: #4444ff;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .uni-link:hover {
+            color: #4444ff;
+        }
+
+        .research-link {
+            color: #ffffff;
+            text-decoration: underline;
+            text-decoration-color: #4CAF50;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .research-link:hover {
+            color: #4CAF50;
+        }
+
+        nav {
+            margin: 2rem 0;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin-right: 1.5rem;
+            padding-bottom: 2px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            border-bottom: 2px solid #4CAF50;
+        }
+
+        .active {
+            border-bottom: 2px solid #4CAF50;
+        }
+
+        .content {
+            margin-top: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .whats-new-item {
+            border-left: 4px solid #4CAF50;
+            padding: 1.5rem 0 1.5rem 1.5rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .whats-new-item:hover {
+            transform: translateX(5px);
+        }
+
+        .whats-new-date {
+            color: #4CAF50;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .publication-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .publication-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #4CAF50;
+            transform: translateY(-2px);
+        }
+
+        .publication-title {
+            color: #4CAF50;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            text-decoration: none;
+        }
+
+        .publication-title:hover {
+            text-decoration: underline;
+        }
+
+        .publication-authors {
+            color: #b0b0b0;
+            margin-bottom: 0.5rem;
+        }
+
+        .publication-venue {
+            color: #888;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        .publication-year {
+            color: #4CAF50;
+            font-weight: bold;
+            float: right;
+            font-size: 1.1rem;
+        }
+
+        /* Gallery Styles */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .photo-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-5px);
+            border-color: #4CAF50;
+            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.2);
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #2d2d2d, #404040);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 1rem;
+        }
+
+        .photo-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-card:hover .photo-image {
+            transform: scale(1.05);
+        }
+
+        .photo-caption {
+            padding: 1rem;
+        }
+
+        .caption-text {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            font-style: italic;
+        }
+
+        /* Loading state */
+        .loading {
+            text-align: center;
+            color: #888;
+            padding: 2rem;
+        }
+
+        /* CV Embed Styles */
+        .cv-container {
+            width: 100%;
+            height: 800px;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .cv-embed {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .cv-fallback {
+            text-align: center;
+            padding: 2rem;
+            color: #b0b0b0;
+        }
+
+        /* Footer Styles */
+        .footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(76, 175, 80, 0.3);
+            text-align: left;
+            color: #888;
+            font-size: 0.7rem;
+        }
+
+        .footer a {
+            color: #ffffff;
+            text-decoration: underline;
+            text-decoration-color: #4CAF50;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 2px;
+        }
+
+        .footer a:hover {
+            color: #4CAF50;
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav a {
+                display: block;
+                margin: 0.5rem 0;
+            }
+
+            .quote-text {
+                font-size: 1.8rem;
+            }
+
+            .quote-source {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-background"></div>
+        <div class="quote-container">
+            <div class="quote-text" id="quoteText"></div>
+            <div class="quote-source" id="quoteSource"></div>
+        </div>
+        <div class="loading-progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <div class="profile-container">
+            <div>
+                <h1>Mohammad Saim</h1>
+                <div class="subtitle">PhD Student at University of Cincinnati</div>
+                <div class="subtitle">Cincinnati, OH, 🇺🇸</div>
+            </div>
+            <img src="../dp.png" alt="Profile" class="profile-image">
+        </div>
+
+        <nav>
+            <a href="#" class="nav-link active" data-section="home">home</a>
+            <a href="#" class="nav-link" data-section="publications">publications</a>
+            <a href="#" class="nav-link" data-section="cv">cv</a>
+            <!-- <a href="#" class="nav-link" data-section="gallery">gallery</a> -->
+            <a href="https://github.com/thisissaim" target="_blank">github</a>
+            <a href="https://www.linkedin.com/in/mohd-saim/" target="_blank">linkedin</a>
+            <a href="mailto:saimmd@mail.uc.edu">email</a>
+        </nav>
+
+        <div class="content">
+            <!-- Home Section -->
+            <div class="content-section active" id="home">
+                <p>
+                    Hi! I'm Saim, and I'm working on natural language processing while my own language processing
+                    becomes
+                    increasingly unnatural.🫣
+                </p>
+                <br>
+                <p>
+                    I am a PhD student in the <a href="https://ceas.uc.edu/academics/departments/computer-science.html"
+                        class="dept-link" target="_blank">Department of Computer Science</a>, advised by <a
+                        href="https://jiangtianyu.com/" class="advisor-link" target="_blank"> Dr. Tianyu Jiang</a> at
+                    UC.
+                    My research interests include natural language processing, with current focus on large
+                    vision language models. I like building stuff with LLMs which contributes to social good. I enjoy
+                    listening to music, ranting on social media, and capturing normal life photos!, when I'm not fixing
+                    my
+                    home Wi-fi.
+                </p>
+
+                <!-- What's New Section on Home Page -->
+                <div style="margin-top: 3rem;">
+                    <h2 style="margin-bottom: 2rem; color: #4CAF50; font-size: 1.8rem;">What's New</h2>
+
+                    <div class="whats-new-item">
+                        <div class="whats-new-date">Jan 2025</div>
+                        <h3>Teaching Assistant</h3>
+                        <p>I'll be TA'ing for <strong>Intelligent Data Analysis</strong> by Dr. Gowtham Atluri this
+                            spring
+                            🍃</p>
+                    </div>
+
+                    <div class="whats-new-item">
+                        <div class="whats-new-date">Oct 2024</div>
+                        <h3>Lab 2 Market Symposium</h3>
+                        <p>Will be attendinng the Lab2Market symposium at 1819 Innovation Hub, UC!</p>
+                    </div>
+
+                    <div class="whats-new-item">
+                        <div class="whats-new-date">Sep 2024</div>
+                        <h3>Teaching Assistant</h3>
+                        <p>Started as a TA for Intro to Machine Learning by Prof. Anca Ralescu this Fall 🍂</p>
+                    </div>
+
+                    <div class="whats-new-item">
+                        <div class="whats-new-date">Aug 2024</div>
+                        <h3>Edu Update!</h3>
+                        <p>I'll be starting my PhD from Fall 2024 at the University of Cincinnati. Go Bearcats!</p>
+                    </div>
+
+                    <div class="whats-new-item">
+                        <div class="whats-new-date">July 2024</div>
+                        <h3>Asian Undergraduate Symposium</h3>
+                        <p>I'll be attending the Asian Undergraduate Symposium at National University of Singapore!🇸🇬
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="footer">
+                    <p>Web Inspo from <a href="https://github.com/cassidoo/blahg" target="_blank">Cassidy Williams !</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Publications Section -->
+            <div class="content-section" id="publications">
+                <h2 style="margin-bottom: 2rem; color: #4CAF50;">Publications</h2>
+
+                <div class="publication-item">
+                    <div class="publication-year">2023</div>
+                    <a href="https://ieeexplore.ieee.org/abstract/document/10419938" class="publication-title">Analyzing
+                        the
+                        Performance of Machine Learning and Deep Learning Models in Detecting Cyberbullying Comments</a>
+                    <div class="publication-authors">M Saim, RM Rizvi, MK Khan</div>
+                    <div class="publication-venue">2023 International Conference on Recent Advances in Science and
+                        Engineering Technology</div>
+                </div>
+
+                <div class="publication-item">
+                    <div class="publication-year">2023</div>
+                    <a href="https://ieeexplore.ieee.org/abstract/document/10307218" class="publication-title">A
+                        Decentralized BYOD Authentication System secure against ReEntrancy Attacks</a>
+                    <div class="publication-authors">M Mamoon, M Saim, I Shah, A Samad</div>
+                    <div class="publication-venue">2023 14th International Conference on Computing Communication and
+                        Networking Technologies</div>
+                </div>
+
+                <div class="publication-item">
+                    <div class="publication-year">2022</div>
+                    <a href="https://ieeexplore.ieee.org/abstract/document/10094482" class="publication-title">E-voting
+                        via
+                        upgradable smart contracts on blockchain</a>
+                    <div class="publication-authors">M Saim, M Mamoon, I Shah, A Samad</div>
+                    <div class="publication-venue">2022 International conference on futuristic technologies (INCOFT)
+                    </div>
+                </div>
+            </div>
+
+            <!-- CV Section -->
+            <div class="content-section" id="cv">
+                <h2 style="margin-bottom: 2rem; color: #4CAF50;">Curriculum Vitae</h2>
+                <p style="margin-bottom: 1rem;">
+                    <a href="Saim_Mohammad_CV.pdf" target="_blank"
+                        style="color: #4CAF50; text-decoration: underline;">Download my CV here</a>
+                </p>
+                <div class="cv-container">
+                    <iframe src="Saim_Mohammad_CV.pdf" class="cv-embed" title="Mohammad Saim CV">
+                        <div class="cv-fallback">
+                            <p>Your browser doesn't support PDF viewing.</p>
+                            <p><a href="Saim_Mohammad_CV.pdf" target="_blank" style="color: #4CAF50;">Click here to
+                                    download
+                                    the CV</a></p>
+                        </div>
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- Gallery Section -->
+            <div class="content-section" id="gallery">
+                <h2 style="margin-bottom: 2rem; color: #4CAF50;">Gallery</h2>
+
+                <div class="gallery-grid">
+                    <!-- Row 1 -->
+                    <div class="photo-card">
+                        <div class="photo-placeholder">
+                            <span>📸 Photo Coming Soon</span>
+                        </div>
+                        <div class="photo-caption">
+                            <div class="caption-title">Research Lab Moments</div>
+                            <div class="caption-text">Candid shots from late-night coding sessions and breakthrough
+                                moments
+                                in the lab.</div>
+                        </div>
+                    </div>
+
+                    <div class="photo-card">
+                        <div class="photo-placeholder">
+                            <span>📸 Photo Coming Soon</span>
+                        </div>
+                        <div class="photo-caption">
+                            <div class="caption-title">Conference Adventures</div>
+                            <div class="caption-text">Networking, presentations, and learning at various AI conferences.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="photo-card">
+                        <div class="photo-placeholder">
+                            <span>📸 Photo Coming Soon</span>
+                        </div>
+                        <div class="photo-caption">
+                            <div class="caption-title">Cincinnati Life</div>
+                            <div class="caption-text">Exploring the beautiful city of Cincinnati and local coffee shops.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 2 -->
+                    <div class="photo-card">
+                        <div class="photo-placeholder">
+                            <span>📸 Photo Coming Soon</span>
+                        </div>
+                        <div class="photo-caption">
+                            <div class="caption-title">Code & Coffee</div>
+                            <div class="caption-text">The perfect combination for productive mornings.</div>
+                        </div>
+                    </div>
+
+                    <div class="photo-card">
+                        <div class="photo-placeholder">
+                            <span>📸 Photo Coming Soon</span>
+                        </div>
+                        <div class="photo-caption">
+                            <div class="caption-title">Team Collaborations</div>
+                            <div class="caption-text">Working with amazing colleagues and fellow researchers.</div>
+                        </div>
+                    </div>
+
+                    <div class="photo-card">
+                        <div class="photo-placeholder">
+                            <span>📸 Photo Coming Soon</span>
+                        </div>
+                        <div class="photo-caption">
+                            <div class="caption-title">Everyday Moments</div>
+                            <div class="caption-text">Capturing the beauty in ordinary moments.</div>
+                        </div>
+                    </div>
+
+                    <!-- Row 3 -->
+                    <div class="photo-card">
+                        <div class="photo-placeholder">
+                            <span>📸 Photo Coming Soon</span>
+                        </div>
+                        <div class="photo-caption">
+                            <div class="caption-title">Tech Meetups</div>
+                            <div class="caption-text">Local tech community events in Cincinnati.</div>
+                        </div>
+                    </div>
+
+                    <div class="photo-card">
+                        <div class="photo-placeholder">
+                            <span>📸 Photo Coming Soon</span>
+                        </div>
+                        <div class="photo-caption">
+                            <div class="caption-title">Nature Breaks</div>
+                            <div class="caption-text">Taking breaks from screen time to enjoy nature.</div>
+                        </div>
+                    </div>
+
+                    <div class="photo-card">
+                        <div class="photo-placeholder">
+                            <span>📸 Photo Coming Soon</span>
+                        </div>
+                        <div class="photo-caption">
+                            <div class="caption-title">Home Setup</div>
+                            <div class="caption-text">My home office setup where most of the magic happens.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inspirational quotes from movies and TV shows
+        const quotes = [
+            {
+                text: "Do or do not. There is no try.",
+                source: "Yoda, Star Wars"
+            },
+            {
+                text: "It is not our abilities that show what we truly are. It is our choices.",
+                source: "Dumbledore, Harry Potter"
+            },
+            {
+                text: "The future is not set. There is no fate but what we make for ourselves.",
+                source: "Terminator 2"
+            },
+            {
+                text: "Sometimes it is the people no one expects anything from who do the things no one can imagine.",
+                source: "The Imitation Game"
+            },
+            {
+                text: "In this life, you don't have to prove nothin' to nobody but yourself.",
+                source: "Rudy"
+            },
+            {
+                text: "Every man dies, not every man really lives.",
+                source: "Braveheart"
+            },
+            {
+                text: "The only way to achieve the impossible is to believe it is possible.",
+                source: "Alice in Wonderland"
+            },
+            {
+                text: "We are who we choose to be.",
+                source: "Spider-Man"
+            },
+            {
+                text: "It's not about how hard you hit. It's about how hard you can get hit and keep moving forward.",
+                source: "Rocky Balboa"
+            },
+            {
+                text: "The moment you doubt whether you can fly, you cease forever to be able to do it.",
+                source: "Peter Pan"
+            },
+            {
+                text: "Your focus determines your reality.",
+                source: "Qui-Gon Jinn, Star Wars"
+            },
+            {
+                text: "Great men are not born great, they grow great.",
+                source: "The Godfather"
+            },
+            {
+                text: "What we do in life echoes in eternity.",
+                source: "Gladiator"
+            },
+            {
+                text: "The greatest teacher, failure is.",
+                source: "Yoda, Star Wars"
+            },
+            {
+                text: "I am not in danger. I am the danger.",
+                source: "Breaking Bad"
+            }
+        ];
+
+        // Select a random quote
+        function getRandomQuote() {
+            return quotes[Math.floor(Math.random() * quotes.length)];
+        }
+
+        // Loading screen functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const mainContent = document.getElementById('mainContent');
+            const quoteText = document.getElementById('quoteText');
+            const quoteSource = document.getElementById('quoteSource');
+            const progressBar = document.getElementById('progressBar');
+
+            // Display random quote
+            const quote = getRandomQuote();
+            quoteText.textContent = `"${quote.text}"`;
+            quoteSource.textContent = quote.source;
+
+            // Start progress bar animation
+            setTimeout(() => {
+                progressBar.style.width = '100%';
+            }, 100);
+
+            // Hide loading screen and show main content
+            setTimeout(() => {
+                loadingScreen.classList.add('fade-out');
+                mainContent.classList.add('visible');
+            }, 5000);
+
+            // Navigation functionality
+            const navLinks = document.querySelectorAll('.nav-link');
+            const contentSections = document.querySelectorAll('.content-section');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetSection = this.getAttribute('data-section');
+
+                    if (targetSection) {
+                        // Remove active class from all nav links and content sections
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        contentSections.forEach(s => s.classList.remove('active'));
+
+                        // Add active class to clicked nav link and corresponding content section
+                        this.classList.add('active');
+                        document.getElementById(targetSection).classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
