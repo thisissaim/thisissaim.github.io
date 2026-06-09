@@ -1,0 +1,750 @@
+/* ============================================================
+   SHARED STYLES — style.css
+   Warm editorial / research-journal aesthetic
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+
+/* ── Design Tokens ─────────────────────────────────────────── */
+:root {
+    --bg: #ede8df;
+    --bg-warm: #fff3d5;
+    --bg-card: rgba(255, 252, 246, 0.88);
+    --text: #261e14;
+    --text-mid: #5a4e42;
+    --text-light: #8c7f73;
+    --accent: #4a7c4e;
+    --accent-light: #6a9c6e;
+    --accent-faint: rgba(74, 124, 78, 0.15);
+    --red: #b83232;
+    --amber: #b86a00;
+    --teal: #0e8a7a;
+    --blue: #2a50a0;
+    --border: rgba(92, 80, 65, 0.18);
+    --shadow-sm: 0 2px 8px rgba(38, 30, 20, 0.10);
+    --shadow-md: 0 6px 20px rgba(38, 30, 20, 0.14);
+    --shadow-lg: 0 12px 40px rgba(38, 30, 20, 0.18);
+    --radius: 6px;
+    --polaroid-bg: #faf8f4;
+    --stripe-a: #cec8be;
+    --stripe-b: #ddd9d2;
+    --mono: 'JetBrains Mono', monospace;
+    --serif: 'Crimson Text', Georgia, serif;
+}
+
+/* ── Reset ──────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ── Grain Texture ──────────────────────────────────────────── */
+.grain-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9997;
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.80' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+    background-repeat: repeat;
+    opacity: 0.040;
+    mix-blend-mode: multiply;
+}
+
+/* ── Base ────────────────────────────────────────────────────── */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--mono);
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    min-height: 100vh;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* ── Page Wrapper ────────────────────────────────────────────── */
+.page-wrapper {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+}
+
+/* ── Styled Link Types ───────────────────────────────────────── */
+.paper-link {
+    color: var(--teal);
+    text-decoration: underline;
+    text-decoration-color: var(--teal);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    transition: opacity 0.2s;
+}
+
+.paper-link:hover {
+    opacity: 0.72;
+}
+
+.dept-link {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--red);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    transition: color 0.2s;
+}
+
+.dept-link:hover {
+    color: var(--red);
+}
+
+.lab-link {
+    color: var(--red);
+    text-decoration: underline;
+    text-decoration-color: var(--red);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    transition: opacity 0.2s;
+}
+
+.lab-link:hover {
+    opacity: 0.72;
+}
+
+.advisor-link {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--amber);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    transition: color 0.2s;
+}
+
+.advisor-link:hover {
+    color: var(--amber);
+}
+
+.uni-link {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--blue);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    transition: color 0.2s;
+}
+
+.uni-link:hover {
+    color: var(--blue);
+}
+
+.research-link {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    transition: color 0.2s;
+}
+
+.research-link:hover {
+    color: var(--accent);
+}
+
+/* ── Profile ─────────────────────────────────────────────────── */
+.profile-container {
+    display: flex;
+    align-items: flex-start;
+    gap: clamp(20rem, 8vw, 25rem); 
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease both;
+}
+
+.profile-image {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--accent);
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.profile-image:hover {
+    transform: scale(1.04);
+}
+
+.profile-name {
+    font-family: var(--serif);
+    font-size: 2.6rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+    line-height: 1.1;
+}
+
+.profile-sub {
+    color: var(--text-mid);
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+}
+
+/* ── Navigation ──────────────────────────────────────────────── */
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0;
+    margin: 1.8rem 0 0;
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+}
+
+nav a {
+    color: var(--text-mid);
+    font-size: 0.82rem;
+    margin-right: 1.4rem;
+    padding-bottom: 2px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+nav a:hover,
+nav a.active {
+    color: var(--text);
+    border-bottom-color: var(--accent);
+}
+
+/* ── Content Sections ────────────────────────────────────────── */
+.content {
+    margin-top: 2.5rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+}
+
+.content-section {
+    display: none;
+}
+
+.content-section.active {
+    display: block;
+}
+
+.intro-text {
+    color: var(--text);
+    font-size: 0.92rem;
+}
+
+.intro-text+.intro-text {
+    margin-top: 1rem;
+}
+
+/* ── Section Heading ─────────────────────────────────────────── */
+.section-heading {
+    font-family: var(--serif);
+    font-size: 1.9rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 2rem;
+}
+
+/* ── Timeline ────────────────────────────────────────────────── */
+.whats-new-header {
+    margin: 3rem 0 2rem;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 1.8rem;
+}
+
+/* Vertical spine */
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 6px;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), rgba(74, 124, 78, 0.08));
+    border-radius: 1px;
+}
+
+.tl-item {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding-bottom: 2.8rem;
+}
+
+/* Bullet dot */
+.tl-dot {
+    position: absolute;
+    left: -1.8rem;
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2.5px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--accent);
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+/* Body text area */
+.tl-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.tl-date {
+    font-size: 0.75rem;
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.3rem;
+}
+
+.tl-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+}
+
+.tl-text {
+    font-size: 0.85rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+}
+
+/* ── Polaroid Thumbnail ──────────────────────────────────────── */
+.tl-polaroid {
+    flex-shrink: 0;
+    width: 100px;
+    cursor: pointer;
+
+    /* use CSS custom prop for per-item rotation */
+    --rot: 0deg;
+    transform: rotate(var(--rot));
+    transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.55s ease;
+    transform-origin: center bottom;
+}
+
+.tl-polaroid:hover {
+    transform: rotate(calc(var(--rot) * -0.6)) scale(1.1);
+    z-index: 10;
+}
+
+.polaroid-frame {
+    background: var(--polaroid-bg);
+    padding: 6px 6px 10px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(200, 190, 175, 0.6);
+}
+
+.polaroid-img-area {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Diagonal-stripe placeholder */
+.polaroid-placeholder {
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(-45deg,
+            var(--stripe-a),
+            var(--stripe-a) 2px,
+            var(--stripe-b) 2px,
+            var(--stripe-b) 12px);
+}
+
+.polaroid-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.polaroid-label {
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 0.52rem;
+    color: var(--text-mid);
+    margin-top: 5px;
+    white-space: pre;
+    line-height: 1.3;
+    letter-spacing: 0.04em;
+}
+.tl-item.no-polaroid {
+    padding-bottom: 1.6rem;
+    /* was 2.8rem */
+}
+
+/* ── Publications ────────────────────────────────────────────── */
+.pub-item {
+    background: var(--bg-card);
+    padding: 1.4rem 1.4rem 1.2rem;
+    margin-bottom: 1.2rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    position: relative;
+}
+
+.pub-item:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.pub-year {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.pub-title {
+    display: block;
+    color: var(--accent);
+    font-size: 0.92rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.45;
+    padding-right: 3.5rem;
+    transition: text-decoration-color 0.2s;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 3px;
+}
+
+.pub-title:hover {
+    text-decoration-color: var(--accent);
+}
+
+.pub-authors {
+    font-size: 0.78rem;
+    color: var(--text-mid);
+    margin-bottom: 0.35rem;
+}
+
+.pub-venue {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+/* ── CV ──────────────────────────────────────────────────────── */
+.cv-pages {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.cv-page-wrap {
+    width: 100%;
+    box-shadow: var(--shadow-md);
+    border-radius: 3px;
+    overflow: hidden;
+    background: #faf9f6;
+}
+
+.cv-page-wrap canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.cv-loading {
+    font-size: 0.82rem;
+    color: var(--text-light);
+    padding: 2rem 0;
+}
+
+.cv-link {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 3px;
+    font-size: 0.88rem;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+/* ── Footer ──────────────────────────────────────────────────── */
+.footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-light);
+    font-size: 0.70rem;
+}
+
+.footer a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+}
+
+/* ── Animations ──────────────────────────────────────────────── */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   PHOTO VIEWER PAGE — photo.html
+   ───────────────────────────────────────────────────────────── */
+
+.photo-page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1.5rem 4rem;
+}
+
+.photo-back-link {
+    align-self: flex-start;
+    font-size: 0.78rem;
+    color: var(--text-mid);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+    margin-bottom: 3rem;
+}
+
+.photo-back-link:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+/* Navigation row: ← [polaroid] → */
+.photo-nav-row {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 760px;
+    justify-content: center;
+    animation: fadeUp 0.5s ease both;
+}
+
+.nav-arrow {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-mid);
+    cursor: pointer;
+    padding: 0.5rem 0.8rem;
+    transition: color 0.2s, transform 0.2s;
+    font-family: var(--mono);
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.nav-arrow:hover {
+    color: var(--accent);
+    transform: scale(1.2);
+}
+
+.nav-arrow:disabled {
+    color: var(--text-light);
+    opacity: 0.35;
+    cursor: default;
+}
+
+.nav-arrow:disabled:hover {
+    transform: none;
+}
+
+/* Full-size polaroid frame */
+.big-polaroid {
+    background: var(--polaroid-bg);
+    padding: 14px 14px 56px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(200, 190, 175, 0.7);
+    position: relative;
+    max-width: 600px;
+    width: 100%;
+    transition: box-shadow 0.3s ease;
+}
+
+.big-polaroid-img-area {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: #e0dbd2;
+    position: relative;
+}
+
+.big-polaroid-placeholder {
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(-45deg,
+            var(--stripe-a),
+            var(--stripe-a) 3px,
+            var(--stripe-b) 3px,
+            var(--stripe-b) 16px);
+}
+
+.big-polaroid-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Footer strip inside polaroid */
+.big-polaroid-footer {
+    position: absolute;
+    bottom: 0;
+    left: 14px;
+    right: 14px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4px;
+}
+
+.big-polaroid-date {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--text-mid);
+    font-style: italic;
+}
+
+.big-polaroid-counter {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--text-light);
+}
+
+/* Caption area below polaroid */
+.photo-caption-area {
+    max-width: 600px;
+    width: 100%;
+    margin-top: 2.5rem;
+    animation: fadeUp 0.6s 0.15s ease both;
+    padding: 0 4px;
+}
+
+.photo-caption-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.9rem;
+    line-height: 1.25;
+}
+
+.photo-caption-desc {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    color: var(--text-mid);
+    line-height: 1.7;
+}
+
+/* VSCO link */
+.vsco-section {
+    max-width: 600px;
+    width: 100%;
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.6s 0.25s ease both;
+}
+
+.vsco-link {
+    font-family: var(--mono);
+    font-size: 0.80rem;
+    color: var(--text-mid);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.vsco-link:hover {
+    color: var(--text);
+    border-color: var(--accent);
+}
+
+.vsco-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 640px) {
+    .profile-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .profile-image {
+        width: 120px;
+        height: 120px;
+    }
+
+    .profile-name {
+        font-size: 2rem;
+    }
+
+    .tl-polaroid {
+        width: 76px;
+    }
+
+    nav a {
+        margin-right: 1rem;
+    }
+
+    .photo-nav-row {
+        gap: 1rem;
+    }
+
+    .big-polaroid {
+        padding: 10px 10px 48px;
+    }
+
+    .photo-caption-title {
+        font-size: 1.5rem;
+    }
+}

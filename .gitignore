@@ -1,0 +1,20 @@
+# dependencies / build
+node_modules/
+package.json
+package-lock.json
+
+# dev tooling
+.vscode/
+scraps/
+tweaks-panel.jsx
+gallery.html
+gallery-config.js
+
+# local junk
+.DS_Store
+*.pkg
+
+# unused photos (only Favourites/profile.jpg is referenced)
+Favourites/photo*.jpeg
+Favourites/photo*.jpg
+Favourites/photo*.webp

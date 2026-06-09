@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mohammad Saim</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="whats-new-data.js"></script>
+</head>
+
+<body>
+
+  <!-- Grain texture overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <div class="page-wrapper">
+
+    <!-- Profile -->
+    <div class="profile-container">
+      <div>
+        <div class="profile-name">Mohammad Saim</div>
+        <div class="profile-sub">PhD Student · University of Cincinnati</div>
+        <div class="profile-sub">Cincinnati, OH &nbsp;🇺🇸</div>
+      </div>
+      <img src="./Favourites/profile.jpg" alt="Mohammad Saim" class="profile-image">
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+      <a href="#" class="nav-link active" data-section="home">home</a>
+      <a href="#" class="nav-link" data-section="publications">publications</a>
+      <a href="#" class="nav-link" data-section="cv">cv</a>
+      <!-- <a href="#" class="nav-link" data-section="gallery">gallery</a> -->
+      <a href="https://github.com/thisissaim" target="_blank" rel="noopener">github</a>
+      <a href="https://www.linkedin.com/in/mohd-saim/" target="_blank" rel="noopener">linkedin</a>
+      <a href="mailto:saimmd@mail.uc.edu">email</a>
+    </nav>
+
+    <!-- ── Content ─────────────────────────────────────────── -->
+    <div class="content">
+
+      <!-- HOME ─────────────────────────────────────────────── -->
+      <div class="content-section active" id="home">
+
+          I am a PhD student in the
+          <a href="https://ceas.uc.edu/academics/departments/computer-science.html" class="dept-link" target="_blank"
+            rel="noopener">Department of Computer Science</a>,
+          advised by
+          <a href="https://jiangtianyu.com/" class="advisor-link" target="_blank" rel="noopener">Dr. Tianyu Jiang</a>
+          in the
+          <a href="https://jiangtianyu.com/lab/" class="lab-link" target="_blank" rel="noopener">CincyNLP Lab</a>.
+          My research interests include natural language processing, with current focus on affective and cognitive computation.
+          I like building stuff with LLMs, which contributes to social good. I enjoy listening to music, ranting on
+          social media, and capturing normal life photos — when I'm not fixing my home Wi-Fi.
+        </p>
+
+        <!-- What's New -->
+        <div class="whats-new-header">
+          <h2 class="section-heading">What's New</h2>
+        </div>
+
+        <!-- Timeline rendered by JS from whatsNewData -->
+        <div class="timeline" id="timeline"></div>
+
+        <!-- Footer -->
+        <div class="footer">
+          <p>Member of the CincyNLP lab.</p>
+        </div>
+      </div>
+
+      <!-- PUBLICATIONS ──────────────────────────────────────── -->
+
+      
+
+
+      <div class="content-section" id="publications">
+        <h2 class="section-heading">Publications</h2>
+
+
+        <div class="pub-item">
+          <span class="pub-year">2026</span>
+          <a href="https://arxiv.org/abs/2604.19125v1" class="pub-title" target="_blank" rel="noopener">
+            Do Emotions Influence Moral Judgment in Large Language Models?
+          </a>
+          <div class="pub-authors">Mohammad Saim and Tianyu Jiang</div>
+          <div class="pub-venue">Findings of the 2026 Conference on Association of Computational Linguistics
+          </div>
+        </div>
+
+        <div class="pub-item">
+          <span class="pub-year">2025</span>
+          <a href="https://arxiv.org/abs/2509.19595" class="pub-title" target="_blank" rel="noopener">
+            Anatomy of a Feeling: Narrating Embodied Emotions via Large Vision-Language Models
+          </a>
+          <div class="pub-authors">Mohammad Saim, Phan Anh Duong, Cat Luong, Aniket Bhanderi, Tianyu Jiang</div>
+          <div class="pub-venue">Findings of the 2025 Conference on Empirical Methods in Natural Language Processing
+          </div>
+        </div>
+
+        <div class="pub-item">
+          <span class="pub-year">2023</span>
+          <a href="https://ieeexplore.ieee.org/abstract/document/10419938" class="pub-title" target="_blank"
+            rel="noopener">
+            Analyzing the Performance of Machine Learning and Deep Learning Models in Detecting Cyberbullying Comments
+          </a>
+          <div class="pub-authors">M Saim, RM Rizvi, MK Khan</div>
+          <div class="pub-venue">2023 International Conference on Recent Advances in Science and Engineering Technology
+          </div>
+        </div>
+
+        <div class="pub-item">
+          <span class="pub-year">2023</span>
+          <a href="https://ieeexplore.ieee.org/abstract/document/10307218" class="pub-title" target="_blank"
+            rel="noopener">
+            A Decentralized BYOD Authentication System Secure Against ReEntrancy Attacks
+          </a>
+          <div class="pub-authors">M Mamoon, M Saim, I Shah, A Samad</div>
+          <div class="pub-venue">2023 14th International Conference on Computing Communication and Networking
+            Technologies</div>
+        </div>
+
+        <div class="pub-item">
+          <span class="pub-year">2022</span>
+          <a href="https://ieeexplore.ieee.org/abstract/document/10094482" class="pub-title" target="_blank"
+            rel="noopener">
+            E-Voting via Upgradable Smart Contracts on Blockchain
+          </a>
+          <div class="pub-authors">M Saim, M Mamoon, I Shah, A Samad</div>
+          <div class="pub-venue">2022 International Conference on Futuristic Technologies (INCOFT)</div>
+        </div>
+      </div>
+
+      <!-- CV ────────────────────────────────────────────────── -->
+      <div class="content-section" id="cv">
+        <h2 class="section-heading">Curriculum Vitae</h2>
+        <a href="Mohammad_Saim_CV.pdf" target="_blank" class="cv-link">↓ Download CV</a>
+        <div class="cv-pages" id="cv-pages">
+          <p class="cv-loading" id="cv-loading">loading cv…</p>
+        </div>
+      </div>
+
+    </div><!-- .content -->
+  </div><!-- .page-wrapper -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script>
+  <script type="module">
+    // ── Render CV via PDF.js ──────────────────────────────────
+    import * as pdfjsLib from 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs';
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs';
+
+    async function renderCV() {
+      const container = document.getElementById('cv-pages');
+      const loading   = document.getElementById('cv-loading');
+      try {
+        const pdf = await pdfjsLib.getDocument('Mohammad_Saim_CV.pdf').promise;
+        loading.remove();
+        for (let i = 1; i <= pdf.numPages; i++) {
+          const page     = await pdf.getPage(i);
+          const viewport = page.getViewport({ scale: 1.6 });
+          const wrap     = document.createElement('div');
+          wrap.className = 'cv-page-wrap';
+          const canvas   = document.createElement('canvas');
+          canvas.width   = viewport.width;
+          canvas.height  = viewport.height;
+          wrap.appendChild(canvas);
+          container.appendChild(wrap);
+          await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+        }
+      } catch (e) {
+        loading.innerHTML =
+          'Preview unavailable. <a href="Mohammad_Saim_CV.pdf" target="_blank" style="color:var(--accent)">Download CV</a>';
+      }
+    }
+
+    // render only when cv tab is first opened
+    let cvRendered = false;
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+          if (link.dataset.section === 'cv' && !cvRendered) {
+            cvRendered = true;
+            renderCV();
+          }
+        });
+      });
+    });
+  </script>
+  <script>
+    // ── Build timeline from whatsNewData ──────────────────────
+    (function buildTimeline() {
+      const container = document.getElementById('timeline');
+      if (!container || typeof whatsNewData === 'undefined') return;
+
+      whatsNewData.forEach(function (item) {
+        const div = document.createElement('div');
+        div.className = 'tl-item' + (item.showPolaroid ? '' : ' no-polaroid');
+
+        div.innerHTML = `
+<div class="tl-dot"></div>
+
+<div class="tl-body">
+  <div class="tl-date">${item.date}</div>
+  <div class="tl-title">${item.title}</div>
+  <div class="tl-text">${item.content}</div>
+</div>
+
+${item.showPolaroid ? `
+<div class="tl-polaroid" title="${item.imageCaption}" style="--rot: ${item.rotation}deg" data-id="${item.id}"
+  tabindex="0" role="button" aria-label="Open photo: ${item.imageCaption}">
+  <div class="polaroid-frame">
+    <div class="polaroid-img-area">
+      ${item.image
+        ? `<img src="${item.image}" alt="${item.imageCaption}" class="polaroid-photo">`
+        : `<div class="polaroid-placeholder" aria-hidden="true"></div>`}
+    </div>
+    <div class="polaroid-label">${item.imageLabel}</div>
+  </div>
+</div>` : ''}
+`;
+
+        if (item.showPolaroid) {
+          const polaroid = div.querySelector('.tl-polaroid');
+          function openPhoto() {
+            window.location.href = `photo.html?id=${item.id}`;
+          }
+          polaroid.addEventListener('click', openPhoto);
+          polaroid.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') openPhoto();
+          });
+        }
+
+        container.appendChild(div);
+      });
+    })();
+
+    // ── Tab navigation ──────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', function () {
+      const navLinks = document.querySelectorAll('.nav-link');
+      const sections = document.querySelectorAll('.content-section');
+
+      navLinks.forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = this.getAttribute('data-section');
+          if (!target) return;
+
+          navLinks.forEach(function (l) { l.classList.remove('active'); });
+          sections.forEach(function (s) { s.classList.remove('active'); });
+
+          this.classList.add('active');
+          document.getElementById(target).classList.add('active');
+        });
+      });
+    });
+  </script>
+
+</body>
+
+</html>

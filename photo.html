@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo — Mohammad Saim</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="whats-new-data.js"></script>
+</head>
+
+<body>
+
+    <!-- Grain overlay -->
+    <div class="grain-overlay" aria-hidden="true"></div>
+
+    <div class="photo-page-wrapper">
+
+        <!-- Back link -->
+        <a href="index.html" class="photo-back-link">← back to home</a>
+
+        <!-- Navigation row: arrow · polaroid · arrow -->
+        <div class="photo-nav-row">
+            <button class="nav-arrow" id="prevBtn" aria-label="Previous photo">←</button>
+
+            <div class="big-polaroid" id="bigPolaroid">
+                <div class="big-polaroid-img-area" id="imgArea">
+                    <!-- filled by JS -->
+                </div>
+                <div class="big-polaroid-footer">
+                    <span class="big-polaroid-date" id="pDate"></span>
+                    <span class="big-polaroid-counter" id="pCounter"></span>
+                </div>
+            </div>
+
+            <button class="nav-arrow" id="nextBtn" aria-label="Next photo">→</button>
+        </div>
+
+        <!-- Caption -->
+        <div class="photo-caption-area">
+            <h1 class="photo-caption-title" id="captionTitle"></h1>
+            <p class="photo-caption-desc" id="captionDesc"></p>
+        </div>
+
+        <!-- VSCO -->
+        <div class="vsco-section">
+            <div class="vsco-eyebrow">more captures</div>
+            <a href="https://vsco.co/thisissaim" target="_blank" rel="noopener" class="vsco-link">
+                See the full collection on VSCO &nbsp;→
+            </a>
+        </div>
+
+    </div><!-- .photo-page-wrapper -->
+
+    <script>
+        // ── State ────────────────────────────────────────────────────
+        var photoData = whatsNewData.filter(function (item) { return item.showPolaroid; });
+        var currentIdx = 0;
+        var total = whatsNewData.length;
+
+        // ── Read id from URL params ───────────────────────────────────
+        (function init() {
+            var params = new URLSearchParams(window.location.search);
+            var id = params.get('id');
+
+            if (id) {
+                var found = whatsNewData.findIndex(function (item) { return item.id === id; });
+                if (found !== -1) currentIdx = found;
+            }
+
+            render(currentIdx);
+        })();
+
+        // ── Render ────────────────────────────────────────────────────
+        function render(idx) {
+            var item = photoData[idx];
+            if (!item) return;
+
+            // Image area
+            var imgArea = document.getElementById('imgArea');
+            if (item.image) {
+                imgArea.innerHTML =
+                    '<img src="' + item.image + '" alt="' + escHtml(item.imageCaption) + '" class="big-polaroid-photo">';
+            } else {
+                imgArea.innerHTML = '<div class="big-polaroid-placeholder" aria-hidden="true"></div>';
+            }
+
+            // Date & counter
+            document.getElementById('pDate').textContent = item.date;
+            document.getElementById('pCounter').textContent = (idx + 1) + ' / ' + total;
+
+            // Caption
+            document.getElementById('captionTitle').textContent = item.imageCaption;
+            document.getElementById('captionDesc').textContent = item.imageDescription;
+
+            // Page title
+            document.title = item.imageCaption + ' — Mohammad Saim';
+
+            // Button states
+            document.getElementById('prevBtn').disabled = (idx === 0);
+            document.getElementById('nextBtn').disabled = (idx === total - 1);
+
+            // Update URL without reloading
+            var newUrl = 'photo.html?id=' + item.id;
+            history.replaceState(null, '', newUrl);
+
+            // Subtle entrance animation on the polaroid
+            var polaroid = document.getElementById('bigPolaroid');
+            polaroid.style.transition = 'none';
+            polaroid.style.opacity = '0';
+            polaroid.style.transform = 'translateY(12px)';
+            // Force reflow
+            void polaroid.offsetWidth;
+            polaroid.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
+            polaroid.style.opacity = '1';
+            polaroid.style.transform = 'translateY(0)';
+        }
+
+        // ── Navigation ────────────────────────────────────────────────
+        document.getElementById('prevBtn').addEventListener('click', function () {
+            if (currentIdx > 0) { currentIdx--; render(currentIdx); }
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', function () {
+            if (currentIdx < total - 1) { currentIdx++; render(currentIdx); }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowLeft' && currentIdx > 0) { currentIdx--; render(currentIdx); }
+            if (e.key === 'ArrowRight' && currentIdx < total - 1) { currentIdx++; render(currentIdx); }
+        });
+
+        // ── Helpers ───────────────────────────────────────────────────
+        function escHtml(str) {
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+    </script>
+
+</body>
+
+</html>
