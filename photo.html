@@ -54,9 +54,11 @@
 
     <script>
         // ── State ────────────────────────────────────────────────────
-        var photoData = whatsNewData.filter(function (item) { return item.showPolaroid; });
+        // The viewer shows only the clicked entry; arrows step through its images.
+        var photoItems = whatsNewData.filter(function (item) { return item.showPolaroid; });
+        var item = photoItems[0];
+        var images = [];
         var currentIdx = 0;
-        var total = whatsNewData.length;
 
         // ── Read id from URL params ───────────────────────────────────
         (function init() {
@@ -64,45 +66,46 @@
             var id = params.get('id');
 
             if (id) {
-                var found = whatsNewData.findIndex(function (item) { return item.id === id; });
-                if (found !== -1) currentIdx = found;
+                var found = photoItems.find(function (it) { return it.id === id; });
+                if (found) item = found;
             }
+
+            images = item.images || (item.image ? [item.image] : []);
+
+            // Hide arrows when there is nothing to step through
+            if (images.length <= 1) {
+                document.getElementById('prevBtn').style.visibility = 'hidden';
+                document.getElementById('nextBtn').style.visibility = 'hidden';
+            }
+
+            document.getElementById('pDate').textContent = item.date;
+            document.getElementById('captionTitle').textContent = item.imageCaption;
+            document.getElementById('captionDesc').textContent = item.imageDescription || '';
+            document.title = item.imageCaption + ' — Mohammad Saim';
+            history.replaceState(null, '', 'photo.html?id=' + item.id);
 
             render(currentIdx);
         })();
 
         // ── Render ────────────────────────────────────────────────────
         function render(idx) {
-            var item = photoData[idx];
-            if (!item) return;
+            var total = images.length;
 
             // Image area
             var imgArea = document.getElementById('imgArea');
-            if (item.image) {
+            if (images[idx]) {
                 imgArea.innerHTML =
-                    '<img src="' + item.image + '" alt="' + escHtml(item.imageCaption) + '" class="big-polaroid-photo">';
+                    '<img src="' + images[idx] + '" alt="' + escHtml(item.imageCaption) + '" class="big-polaroid-photo">';
             } else {
                 imgArea.innerHTML = '<div class="big-polaroid-placeholder" aria-hidden="true"></div>';
             }
 
-            // Date & counter
-            document.getElementById('pDate').textContent = item.date;
-            document.getElementById('pCounter').textContent = (idx + 1) + ' / ' + total;
-
-            // Caption
-            document.getElementById('captionTitle').textContent = item.imageCaption;
-            document.getElementById('captionDesc').textContent = item.imageDescription;
-
-            // Page title
-            document.title = item.imageCaption + ' — Mohammad Saim';
+            // Counter
+            document.getElementById('pCounter').textContent = total > 1 ? (idx + 1) + ' / ' + total : '';
 
             // Button states
             document.getElementById('prevBtn').disabled = (idx === 0);
-            document.getElementById('nextBtn').disabled = (idx === total - 1);
-
-            // Update URL without reloading
-            var newUrl = 'photo.html?id=' + item.id;
-            history.replaceState(null, '', newUrl);
+            document.getElementById('nextBtn').disabled = (idx >= total - 1);
 
             // Subtle entrance animation on the polaroid
             var polaroid = document.getElementById('bigPolaroid');
@@ -117,18 +120,20 @@
         }
 
         // ── Navigation ────────────────────────────────────────────────
-        document.getElementById('prevBtn').addEventListener('click', function () {
-            if (currentIdx > 0) { currentIdx--; render(currentIdx); }
-        });
+        function go(step) {
+            var next = currentIdx + step;
+            if (next < 0 || next >= images.length) return;
+            currentIdx = next;
+            render(currentIdx);
+        }
 
-        document.getElementById('nextBtn').addEventListener('click', function () {
-            if (currentIdx < total - 1) { currentIdx++; render(currentIdx); }
-        });
+        document.getElementById('prevBtn').addEventListener('click', function () { go(-1); });
+        document.getElementById('nextBtn').addEventListener('click', function () { go(1); });
 
         // Keyboard navigation
         document.addEventListener('keydown', function (e) {
-            if (e.key === 'ArrowLeft' && currentIdx > 0) { currentIdx--; render(currentIdx); }
-            if (e.key === 'ArrowRight' && currentIdx < total - 1) { currentIdx++; render(currentIdx); }
+            if (e.key === 'ArrowLeft') go(-1);
+            if (e.key === 'ArrowRight') go(1);
         });
 
         // ── Helpers ───────────────────────────────────────────────────

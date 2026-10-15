@@ -169,6 +169,9 @@ a {
     gap: clamp(20rem, 8vw, 25rem); 
     margin-bottom: 2rem;
     animation: fadeUp 0.6s ease both;
+    /* keep the music widget's hover panel above the nav */
+    position: relative;
+    z-index: 10;
 }
 
 .profile-image {
@@ -264,6 +267,255 @@ nav a.active {
     margin: 3rem 0 2rem;
 }
 
+/* ── Music widget (Last.fm), under the name ─────────────────── */
+.music-widget {
+    position: relative;
+    display: inline-block;
+    margin-top: 0.9rem;
+    max-width: 330px;
+    outline: none;
+}
+
+.music-widget[hidden] {
+    display: none;
+}
+
+.music-widget a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.mw-now {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.3rem 0.75rem 0.3rem 0.3rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.music-widget:hover .mw-now,
+.music-widget.is-open .mw-now,
+.music-widget:focus-visible .mw-now {
+    border-color: var(--accent-light);
+    box-shadow: var(--shadow-sm);
+}
+
+/* record: album art cut into a disc with a spindle hole */
+.mw-disc {
+    position: relative;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    background:
+        repeating-radial-gradient(circle, #2b2520 0 1px, #3a322b 1px 3px);
+    box-shadow: 0 1px 4px rgba(38, 30, 20, 0.25);
+    animation: mw-spin 5s linear infinite;
+    animation-play-state: paused;
+}
+
+.mw-disc img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.mw-disc::after {
+    content: '';
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: 7px;
+    height: 7px;
+    margin: -3.5px 0 0 -3.5px;
+    border-radius: 50%;
+    background: var(--bg);
+    box-shadow: 0 0 0 1.5px rgba(38, 30, 20, 0.35);
+}
+
+.is-playing .mw-disc {
+    animation-play-state: running;
+}
+
+@keyframes mw-spin {
+    to { transform: rotate(360deg); }
+}
+
+.mw-meta {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    line-height: 1.35;
+}
+
+.mw-line {
+    font-size: 0.74rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mw-track {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.mw-artist {
+    color: var(--text-mid);
+}
+
+.mw-sub {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.64rem;
+    color: var(--text-light);
+}
+
+.is-playing .mw-status {
+    color: var(--accent);
+}
+
+/* equaliser: resting dots when idle, soft bouncing bars when playing */
+.mw-eq {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 10px;
+}
+
+.mw-eq i {
+    width: 2px;
+    height: 100%;
+    border-radius: 1px;
+    background: var(--text-light);
+    transform-origin: bottom;
+    transform: scaleY(0.2);
+    transition: transform 0.4s ease;
+}
+
+.is-playing .mw-eq i {
+    background: var(--accent);
+    animation: mw-eq-a 1.1s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+.is-playing .mw-eq i:nth-child(2) { animation-name: mw-eq-b; animation-duration: 0.9s; }
+.is-playing .mw-eq i:nth-child(3) { animation-name: mw-eq-c; animation-duration: 1.3s; }
+.is-playing .mw-eq i:nth-child(4) { animation-name: mw-eq-b; animation-duration: 1.05s; animation-delay: -0.4s; }
+
+@keyframes mw-eq-a {
+    0%, 100% { transform: scaleY(0.3); }
+    30% { transform: scaleY(0.9); }
+    60% { transform: scaleY(0.5); }
+}
+
+@keyframes mw-eq-b {
+    0%, 100% { transform: scaleY(0.8); }
+    40% { transform: scaleY(0.25); }
+    70% { transform: scaleY(1); }
+}
+
+@keyframes mw-eq-c {
+    0%, 100% { transform: scaleY(0.5); }
+    25% { transform: scaleY(1); }
+    55% { transform: scaleY(0.3); }
+    80% { transform: scaleY(0.75); }
+}
+
+/* recent tracks: appear on hover / tap */
+.mw-panel {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    z-index: 5;
+    width: 270px;
+    padding: 0.6rem 0.75rem;
+    background: var(--polaroid-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    font-size: 0.68rem;
+    text-align: left;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.music-widget:hover .mw-panel,
+.music-widget:focus-within .mw-panel,
+.music-widget.is-open .mw-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.mw-panel-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 0.35rem;
+}
+
+.mw-panel ul {
+    list-style: none;
+}
+
+.mw-panel li + li {
+    margin-top: 0.25rem;
+}
+
+.mw-panel li a {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-mid);
+}
+
+.mw-r-artist {
+    color: var(--text-light);
+}
+
+.mw-panel li a:hover .mw-r-track,
+.mw-profile:hover {
+    color: var(--accent);
+}
+
+.mw-profile {
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: var(--text-light);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mw-disc,
+    .is-playing .mw-eq i {
+        animation: none;
+    }
+    .is-playing .mw-eq i { transform: scaleY(0.7); }
+}
+
+@media (max-width: 640px) {
+    .music-widget {
+        max-width: 100%;
+    }
+    .mw-panel {
+        left: 50%;
+        transform: translate(-50%, -4px);
+    }
+    .music-widget:hover .mw-panel,
+    .music-widget:focus-within .mw-panel,
+    .music-widget.is-open .mw-panel {
+        transform: translate(-50%, 0);
+    }
+}
+
 .timeline {
     position: relative;
     padding-left: 1.8rem;
@@ -329,6 +581,15 @@ nav a.active {
     font-size: 0.85rem;
     color: var(--text-mid);
     line-height: 1.6;
+}
+
+.tl-list {
+    margin: 0.2rem 0 0;
+    padding-left: 1.1rem;
+}
+
+.tl-list li {
+    margin: 0.1rem 0;
 }
 
 /* ── Polaroid Thumbnail ──────────────────────────────────────── */
@@ -474,6 +735,53 @@ nav a.active {
     height: auto;
 }
 
+.cv-page-wrap {
+    position: relative;
+}
+
+/* PDF.js text layer — invisible text over the canvas so the CV is selectable */
+.textLayer {
+    position: absolute;
+    inset: 0;
+    overflow: clip;
+    line-height: 1;
+    text-align: initial;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+    forced-color-adjust: none;
+    transform-origin: 0 0;
+    z-index: 0;
+}
+
+.textLayer :is(span, br) {
+    color: transparent;
+    position: absolute;
+    white-space: pre;
+    cursor: text;
+    transform-origin: 0 0;
+}
+
+.textLayer ::selection {
+    background: rgba(0, 0, 255, 0.25);
+}
+
+.textLayer br::selection {
+    background: transparent;
+}
+
+.textLayer .endOfContent {
+    display: block;
+    position: absolute;
+    inset: 100% 0 0;
+    z-index: 0;
+    cursor: default;
+    user-select: none;
+}
+
+.textLayer .endOfContent.active {
+    top: 0;
+}
+
 .cv-loading {
     font-size: 0.82rem;
     color: var(--text-light);
@@ -600,15 +908,16 @@ nav a.active {
 
 .big-polaroid-img-area {
     width: 100%;
-    aspect-ratio: 4 / 3;
     overflow: hidden;
     background: #e0dbd2;
     position: relative;
+    display: flex;
+    justify-content: center;
 }
 
 .big-polaroid-placeholder {
     width: 100%;
-    height: 100%;
+    aspect-ratio: 4 / 3;
     background: repeating-linear-gradient(-45deg,
             var(--stripe-a),
             var(--stripe-a) 3px,
@@ -617,9 +926,10 @@ nav a.active {
 }
 
 .big-polaroid-photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    /* show the whole photo (portrait or landscape) without cropping */
+    max-width: 100%;
+    max-height: 70vh;
+    height: auto;
     display: block;
 }
 

@@ -22,6 +22,8 @@
         <div class="profile-name">Mohammad Saim</div>
         <div class="profile-sub">PhD Student · University of Cincinnati</div>
         <div class="profile-sub">Cincinnati, OH &nbsp;🇺🇸</div>
+        <!-- Music via Last.fm, filled by spotify-widget.js -->
+        <div class="music-widget" id="spotify-widget" tabindex="0" hidden></div>
       </div>
       <img src="./Favourites/profile.jpg" alt="Mohammad Saim" class="profile-image">
     </div>
@@ -77,6 +79,25 @@
       <div class="content-section" id="publications">
         <h2 class="section-heading">Publications</h2>
 
+        <div class="pub-item">
+          <span class="pub-year">2026</span>
+          <a href="https://arxiv.org/abs/2609.00310" class="pub-title" target="_blank" rel="noopener">
+            Emotional Labor Strategy Preferences in LLM Personas
+          </a>
+          <div class="pub-authors">Mohammad Saim and Tianyu Jiang</div>
+          <div class="pub-venue">Findings of the 2026 Conference on Empirical Methods in Natural Language Processing
+          </div>
+        </div>
+
+        <div class="pub-item">
+          <span class="pub-year">2026</span>
+          <a href="https://arxiv.org/abs/2609.03394" class="pub-title" target="_blank" rel="noopener">
+            Chiaroscuro for Emotions: A Contrastive Emotion Benchmark Grounded in Appraisal Theory
+          </a>
+          <div class="pub-authors">Divyesh Bommana, Mohammad Saim, Tianyu Jiang</div>
+          <div class="pub-venue">Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing
+          </div>
+        </div>
 
         <div class="pub-item">
           <span class="pub-year">2026</span>
@@ -143,6 +164,7 @@
     </div><!-- .content -->
   </div><!-- .page-wrapper -->
 
+  <script src="spotify-widget.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script>
   <script type="module">
     // ── Render CV via PDF.js ──────────────────────────────────
@@ -165,8 +187,25 @@
           canvas.width   = viewport.width;
           canvas.height  = viewport.height;
           wrap.appendChild(canvas);
+
+          // transparent, selectable text over the canvas
+          const textDiv  = document.createElement('div');
+          textDiv.className = 'textLayer';
+          wrap.appendChild(textDiv);
           container.appendChild(wrap);
+
+          // keep text aligned with the canvas as the page width changes
+          const baseWidth = page.getViewport({ scale: 1 }).width;
+          const fit = () => wrap.style.setProperty('--scale-factor', wrap.clientWidth / baseWidth);
+          fit();
+          new ResizeObserver(fit).observe(wrap);
+
           await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+          await new pdfjsLib.TextLayer({
+            textContentSource: page.streamTextContent(),
+            container: textDiv,
+            viewport,
+          }).render();
         }
       } catch (e) {
         loading.innerHTML =
